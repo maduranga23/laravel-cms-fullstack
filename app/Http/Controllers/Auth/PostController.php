@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Post\CreateRequest;
 use App\Models\Category;
+use App\Models\Posts;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -35,17 +37,22 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $request->validate([
-            'title' => ['required', 'min:2', 'max:255', 'string'],
-            'category' => ['required'],
-            'is_publish' => ['required'],
-            'file' => ['required', 'image'],
-            'description' => ['required', 'string']
-        ]);
 
-        return $request->all();
+if($request->has('file')){
+    $file = $request->file;
+    $fileName = time(). $file->getClientOriginalName();
+    dd($fileName);
+}
+
+//Post::create([
+//'category_id' => $request->category,
+//'is_publish' => $request->is_publish,
+//'title' => $request->title,
+//'description'=>$request->description,
+//]);
+
     }
 
     /**
