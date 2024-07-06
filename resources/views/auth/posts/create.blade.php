@@ -26,10 +26,22 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Create Posts</h4>
-              <form class="forms-sample">
+
+              @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
+
+              <form method="post" action="{{ route('posts.store') }}" class="forms-sample">
+                @csrf
                 <div class="form-group">
                   <label >Title</label>
-                  <input type="text" class="form-control" id="" placeholder="Title">
+                  <input type="text" class="form-control" name="title" id="" placeholder="Title">
                 </div>
                 <div class="form-group">
                   <label>Category</label>
