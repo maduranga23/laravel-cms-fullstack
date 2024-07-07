@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Post\CreateRequest;
 use App\Models\Category;
 use App\Models\Posts;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -17,7 +20,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = Posts::with(['gallery', 'category'])->get();
 
+        return view('auth.posts.index', ['posts'=> $posts]);
     }
 
     /**
@@ -39,20 +44,37 @@ class PostController extends Controller
      */
     public function store(CreateRequest $request)
     {
+        try{
 
-if($request->has('file')){
-    $file = $request->file;
-    $fileName = time(). $file->getClientOriginalName();
-    dd($fileName);
-}
+            DB::beginTransaction();
+        if ($request->has('file')) {
+            $file = $request->file;
+            $fileName = time() . $file->getClientOriginalName();
+            $imagePath = public_path('images/posts');
+            $file->move($imagePath, $fileName);
 
-//Post::create([
-//'category_id' => $request->category,
-//'is_publish' => $request->is_publish,
-//'title' => $request->title,
-//'description'=>$request->description,
-//]);
+            $gallery = Gallery::create([
+                'image' => $fileName
+            ]);
+        }
 
+        Posts::create([
+            'category_id' => $request->category,
+            'is_publish' => $request->is_publish,
+            'title' => $request->title,
+            'description' => $request->description,
+            'gallery_id' => $gallery->id
+        ]);
+
+        DB::commit();
+    }
+    catch(\Exception $ex) {
+        DB::rollBack();
+        dd($ex->getMessage());
+    }
+        $request->session()->flash('alert-success', 'Post created successfully');
+
+        return redirect()->route('posts.index');
     }
 
     /**

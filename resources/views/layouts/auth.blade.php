@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/auth/css/style.css') }}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/auth/images/favicon.ico') }}" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     @yield('styles')
   </head>
@@ -315,5 +316,25 @@
 </script>
 
 @yield('scripts')
+
+
+@if (Session::has('alert-success'))
+<script>
+  swal("Good job!", "{{ Session::get('alert-success') }}", "success");
+</script>
+@endif
+
+@if (Session::has('alert-update'))
+<script>
+  swal("Good job!", "{{ Session::get('alert-update') }}", "info");
+</script>
+@endif
+
+@if (Session::has('alert-danger'))
+<script>
+  swal("Good job!", "{{ Session::get('alert-danger') }}", "error");
+</script>
+@endif
+
 </body>
 </html>
