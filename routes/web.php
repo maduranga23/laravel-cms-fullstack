@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\PostController;
+use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -17,11 +18,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', [WebsiteController::class, 'home'])->name('home');
 
-    auth()->logout();
-    return 'home page';
-});
+
 
 Auth::routes();
 

@@ -10,6 +10,8 @@ class Posts extends Model
 {
     use HasFactory;
 
+    public const Published = 1;
+    public const Draft = 0;
     protected $fillable = ['gallery_id', 'category_id', 'title', 'description', 'is_publish'];
 
     public function gallery(){
@@ -19,4 +21,6 @@ class Posts extends Model
     public function category(){
         return $this->BelongsTo(Category::class);
     }
+
+
 }

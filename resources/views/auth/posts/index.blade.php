@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@section('styles')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+@endsection
 @section('content')
 
 <div class="main-panel">
@@ -23,7 +27,7 @@
               <h4 class="card-title">Posts</h4>
 
 
-            <table class="table table-striped">
+            <table id="posts-table" class="table table-striped">
                 <thead>
                   <tr>
                     <th> Image </th>
@@ -38,11 +42,11 @@
                 @foreach ($posts as $post)
                 <tr>
                     <td class="py-1">
-                      <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
+                      <img src="{{ $post->gallery->image }}" alt="image" />
                     </td>
                     <td> {{ $post->title }} </td>
                     <td>
-                      {{ Str::limit($post->description ,15, '...') }}
+                      {!! Str::limit($post->description ,15, '...') !!}
                     </td>
                     <td> {{ $post->category->name}}  </td>
                     <td> {{ $post->is_publish == 1 ? 'Publish' : 'Draft'}} </td>
@@ -76,5 +80,17 @@
       </div>
     </div>
     <!-- content-wrapper ends -->
+
+@endsection
+
+@section('sctripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#posts-table').DataTable();
+    });
+</script>
 
 @endsection
