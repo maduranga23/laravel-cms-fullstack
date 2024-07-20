@@ -12,4 +12,9 @@ class WebsiteController extends Controller
         $posts = Posts::where('is_publish', Posts::Published)-> get();
         return view('website.blog.index', ['posts' => $posts]);
     }
+
+    public function show(Posts $post){
+
+        return view('website.blog.single', ['post' => $post]);
+    }
 }

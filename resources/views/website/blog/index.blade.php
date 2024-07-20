@@ -26,7 +26,7 @@
                                 <img src="{{ $post->gallery->image }}" alt="" style="width: 300px;">
                             </a>
                         </div>
-                        <h3 class="post-title"><a href="">{{ $post->title }}</a></h3>
+                        <h3 class="post-title"><a href="{{ route('website.posts.show', $post->id) }}">{{ $post->title }}</a></h3>
                         <div class="post-meta">
                             <ul>
                                 <li>
@@ -41,7 +41,9 @@
                             </ul>
                         </div>
                         <div class="post-content">
-                            <p>{{ $post->description }} </p>
+                            <p>{!! Str::limit($post->description, 200) !!}</p>
+
+
                             <a href="blog-single.html" class="btn btn-main">Continue Reading</a>
                         </div>
 
