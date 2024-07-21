@@ -1,13 +1,14 @@
 @extends('layouts.website')
 
+@section('title', 'Single Post')
 @section('content')
     <section class="page-title bg-2">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="block">
-                        <h1>Blog Destils</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, quibusdam.</p>
+                        <h1>Single Post</h1>
+
                     </div>
                 </div>
             </div>
